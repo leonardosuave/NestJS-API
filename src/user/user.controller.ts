@@ -6,6 +6,7 @@ import { UserEntity } from "./user.entity";
 import { v4 as uuid } from 'uuid'
 import { UserListDTO } from "./dto/userList.dto";
 import { UpdateUserDTO } from "./dto/update.dto";
+import { Delete } from "@nestjs/common/decorators";
 
 @Controller('/users')
 export class UserController {
@@ -44,5 +45,11 @@ export class UserController {
     async updateUser(@Param('id') id: string, @Body() datasToUpdate: UpdateUserDTO) {
         await this.userRepository.update(id, datasToUpdate);
         return; 
-    }
+    };
+
+    @Delete('/:id')
+    async deleteUser(@Param('id') id: string) {
+        await this.userRepository.delete(id);
+        return;
+    };
 };
