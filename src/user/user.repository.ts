@@ -21,4 +21,19 @@ export class UserRepository {
         //undefined to not exist and true to exist email
         return !getExistEmail;
     };
+
+    //Partial referencia a entity referenciada como dados opcionais e não obrigatórios como no método de criar usuário.
+    async update(id: string, data: Partial<UserEntity>) {
+        const findUser = this.user.find(
+            user => user.id === id
+        );
+
+        if (!findUser) throw new Error('this user not exist');
+        Object.entries(data).forEach(([key, value]) => {
+            if (key === id) return;
+            findUser[key] = value;
+        });
+
+        return findUser;
+    };
 };
